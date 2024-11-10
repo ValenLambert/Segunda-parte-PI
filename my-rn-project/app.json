@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "parte2",
-    "slug": "parte2",
+    "name": "my-rn-project",
+    "slug": "my-rn-project",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
