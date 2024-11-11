@@ -93,12 +93,7 @@ export default class RegisterForm extends Component {
                     value={this.state.password}
                 />
 
-                <TextInput
-                    style={styles.form}
-                    keyboardType='default'
-                    placeholder='Foto de perfil:'
-                />
-                <Text style={styles.extra}>*Puedes subirla luego*</Text>
+               
                 <TouchableOpacity onPress={() => this.enviarLog()} style={styles.button}>
                     <Text>Registrate</Text>
                 </TouchableOpacity>
@@ -144,10 +139,5 @@ const styles = StyleSheet.create({
         margin: 10,
         textAlign: 'center',
         backgroundColor: "#B9E5E8"
-    },
-    extra: {
-        fontSize: 10,
-        textAlign: 'center',
-        fontStyle: "italic",
     }
 }) 
