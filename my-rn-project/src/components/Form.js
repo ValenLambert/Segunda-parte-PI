@@ -14,6 +14,8 @@ export default class Form extends Component {
         }
     }
 
+
+
     enviarLog = () => {
         const { email, password } = this.state;
         auth.signInWithEmailAndPassword(email, password)
@@ -28,7 +30,7 @@ export default class Form extends Component {
     render() {
         return (
             <View style={styles.container}>
-                <Text>Logearse!</Text>
+                <Text style={styles.title}>¡Logearse!</Text>
                 <TextInput
                     style={styles.form}
                     keyboardType='email-address'
@@ -60,9 +62,15 @@ const styles = StyleSheet.create({
         backgroundColor: "#DFF2EB",
       
     },
+    title: {
+        fontSize: 16,
+        fontWeight: "bold"
+    },
     form: {
         borderWidth: 0.5,
-        borderColor: "#7AB2D3"
+        borderColor: "#7AB2D3",
+        margin: 10
+
     },
     button: {
         padding: 4,

@@ -17,6 +17,7 @@ export default class RegisterForm extends Component {
             error3: 0
         }
     }
+    
 
     enviarLog = () => {
         const { email, password, username } = this.state;
@@ -45,11 +46,10 @@ export default class RegisterForm extends Component {
             auth.createUserWithEmailAndPassword(email, password)
                 .then((user) => {
                     if (user) {
-                        db.collection("perfiles").add({
+                        db.collection("users").add({
                             owner: email,
                             createdAt: Date.now(),
                             username: username,
-                            profilePhoto: ""
                         })
                             .then(
                                 () => this.props.navigation.navigate("Login")
@@ -68,7 +68,7 @@ export default class RegisterForm extends Component {
     render() {
         return (
             <View style={styles.container}>
-                <Text>Registrate!</Text>
+                <Text style={styles.title}>¡Registrate!</Text>
                 <TextInput
                     style={styles.form}
                     keyboardType='default'
@@ -83,6 +83,7 @@ export default class RegisterForm extends Component {
                     onChangeText={text => this.setState({ username: text, error3: 0 })}
                     value={this.state.username}
                 />
+
                 <TextInput
                     style={styles.form}
                     keyboardType='default'
@@ -91,6 +92,13 @@ export default class RegisterForm extends Component {
                     onChangeText={text => this.setState({ password: text, error1: 0 })}
                     value={this.state.password}
                 />
+
+                <TextInput
+                    style={styles.form}
+                    keyboardType='default'
+                    placeholder='Foto de perfil:'
+                />
+                <Text style={styles.extra}>*Puedes subirla luego*</Text>
                 <TouchableOpacity onPress={() => this.enviarLog()} style={styles.button}>
                     <Text>Registrate</Text>
                 </TouchableOpacity>
@@ -122,14 +130,24 @@ const styles = StyleSheet.create({
         alignItems: "center",
         backgroundColor: "#DFF2EB"
     },
+    title: {
+        fontSize: 16,
+        fontWeight: "bold"
+    },
     form: {
         borderWidth: 0.5,
-        borderColor: "#7AB2D3"
+        borderColor: "#7AB2D3",
+        margin: 10
     },
     button: {
         padding: 4,
         margin: 10,
         textAlign: 'center',
         backgroundColor: "#B9E5E8"
+    },
+    extra: {
+        fontSize: 10,
+        textAlign: 'center',
+        fontStyle: "italic",
     }
 }) 

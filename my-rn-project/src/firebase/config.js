@@ -17,3 +17,4 @@ export const auth = firebase.auth(); // Obtener la instancia de autenticación
 export const db = app.firestore(); // Obtener la instancia de Realtime Database. LA CAMBIE RECIEN 
 export const storage = app.storage(); // Obtener la instancia de Storage
 
+

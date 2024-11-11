@@ -28,6 +28,10 @@ export default class Register extends Component {
         return (
             <View style={styles.container}>
                 <RegisterForm navigation={this.props.navigation}/>
+                <br></br>
+                <br></br>
+                <br></br>
+                <br></br>
                 <Text>Sino:</Text>
                 <TouchableOpacity onPress={() => this.register()}>
                     <Text style={styles.register} >Login</Text>

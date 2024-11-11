@@ -30,6 +30,10 @@ export default class Login extends Component {
       <View style={styles.container}>
     
         <Form navigation={this.props.navigation}/>
+        <br></br>
+        <br></br>
+        <br></br>
+        <br></br>
         <Text style={styles.register1}>O sino</Text>
         <TouchableOpacity onPress = {()=> this.register()}>
             <Text style={styles.register}>!Registrate!</Text>
@@ -45,7 +49,8 @@ const styles = StyleSheet.create({
       alignItems: "center",
       backgroundColor: "#DFF2EB",
       flex: 1,
-      padding: 200
+      padding: 200,
+      
   },
   
   register1: {
