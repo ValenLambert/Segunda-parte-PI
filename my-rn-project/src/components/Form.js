@@ -58,8 +58,13 @@ export default class Form extends Component {
 
 const styles = StyleSheet.create({
     container: {
+        maxWidth: 480,
+        padding: 10,
         alignItems: "center",
         backgroundColor: "#DFF2EB",
+        alignContent: "space-between",
+        display: "flex"
+
       
     },
     title: {

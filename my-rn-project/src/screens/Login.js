@@ -50,6 +50,7 @@ const styles = StyleSheet.create({
       backgroundColor: "#DFF2EB",
       flex: 1,
       padding: 200,
+      alignContent: "space-between"
       
   },
   
