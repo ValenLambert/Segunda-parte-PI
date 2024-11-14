@@ -27,12 +27,12 @@ export default class Register extends Component {
     render() {
         return (
             <View style={styles.container}>
-                <RegisterForm navigation={this.props.navigation}/>
+                <RegisterForm navigation={this.props.navigation} />
                 <br></br>
                 <br></br>
                 <br></br>
                 <br></br>
-                <Text>Sino:</Text>
+                <Text style={styles.text1}>Si ya tienes cuenta:</Text>
                 <TouchableOpacity onPress={() => this.register()}>
                     <Text style={styles.register} >Login</Text>
                 </TouchableOpacity>
@@ -45,12 +45,25 @@ export default class Register extends Component {
 const styles = StyleSheet.create({
     container: {
         alignItems: "center",
-        backgroundColor: "#DFF2EB",
+        justifyContent: "center",
+        backgroundColor: "#F5EDED",
         flex: 1,
-        padding: 200
+        padding: 25,
+        alignContent: "space-between"
     },
     register: {
-    
-        backgroundColor: "lightblue"
-    }
-  }) 
+        borderColor: "#7FA1C3",
+        backgroundColor: "#608BC1",
+        margin: 5,
+        fontSize: 16,
+        borderRadius: 5,
+        padding: 5
+
+    },
+    text1: {
+        fontSize: 16,
+        textDecorationLine: "underline"
+
+    },
+
+}) 

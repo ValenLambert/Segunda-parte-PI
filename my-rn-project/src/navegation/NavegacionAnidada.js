@@ -13,7 +13,7 @@ import FontAwesome5 from '@expo/vector-icons/FontAwesome5';
 export default class NavegacionAnidada extends Component {
   render() {
     return (
-      <Tab.Navigator>
+      <Tab.Navigator >
         <Tab.Screen
           name="Home"
           component={Home}

@@ -34,9 +34,9 @@ export default class Login extends Component {
         <br></br>
         <br></br>
         <br></br>
-        <Text style={styles.register1}>O sino</Text>
+        <Text style={styles.text1}>Si aun no tiene cuenta:</Text>
         <TouchableOpacity onPress = {()=> this.register()}>
-            <Text style={styles.register}>!Registrate!</Text>
+            <Text style={styles.register}>Registrate</Text>
         </TouchableOpacity> 
       </View>
     )
@@ -47,19 +47,25 @@ export default class Login extends Component {
 const styles = StyleSheet.create({
   container: {
       alignItems: "center",
-      backgroundColor: "#DFF2EB",
+      justifyContent: "center",
+      backgroundColor: "#F5EDED",
       flex: 1,
-      padding: 200,
+      padding: 25,
       alignContent: "space-between"
       
   },
   
-  register1: {
-    width: 45
-},
   register: {
-      borderWidth: 0.5,
-      borderColor: "#7AB2D3",
-      backgroundColor: "lightblue"
-  }
+      borderColor: "#7FA1C3",
+      backgroundColor: "#608BC1",
+      margin:5,
+      borderRadius: 5,
+      fontSize: 16,
+      padding: 5
+  },
+  text1:{
+    fontSize: 16,
+    textDecorationLine: "underline"
+},
+
 }) 

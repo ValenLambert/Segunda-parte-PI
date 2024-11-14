@@ -15,7 +15,7 @@ export default class Profile extends Component {
 const styles = StyleSheet.create({
   container: {
       alignItems: "center",
-      backgroundColor: "#DFF2EB",
+      backgroundColor: "#F5EDED",
       flex: 1,
       
   }})

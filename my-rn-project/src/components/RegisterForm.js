@@ -122,22 +122,31 @@ export default class RegisterForm extends Component {
 
 const styles = StyleSheet.create({
     container: {
+        padding: 25,
         alignItems: "center",
-        backgroundColor: "#DFF2EB"
+        backgroundColor: "#F5EDED",
+        alignContent: "space-between",
+        justifyContent: "center",
     },
     title: {
-        fontSize: 16,
+        fontSize: 26,
         fontWeight: "bold"
     },
     form: {
         borderWidth: 0.5,
-        borderColor: "#7AB2D3",
-        margin: 10
+        borderColor: "#7FA1C3",
+        margin: 10,
+        fontSize: 16,
+
+
     },
     button: {
-        padding: 4,
+        padding: 5,
         margin: 10,
         textAlign: 'center',
-        backgroundColor: "#B9E5E8"
+        backgroundColor: "#6482AD",
+        fontSize: 26,
+        borderRadius: 5
+
     }
 }) 

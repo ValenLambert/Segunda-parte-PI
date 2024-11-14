@@ -31,14 +31,14 @@ export default class Form extends Component {
         return (
             <View style={styles.container}>
                 <Text style={styles.title}>¡Logearse!</Text>
-                <TextInput
+                <TextInput 
                     style={styles.form}
                     keyboardType='email-address'
                     placeholder='Email:'
                     onChangeText={text => this.setState({ email: text })}
                     value={this.state.email}
                 />
-                <TextInput
+                <TextInput 
                     style={styles.form}
                     keyboardType='default'
                     placeholder='Password:'
@@ -58,29 +58,32 @@ export default class Form extends Component {
 
 const styles = StyleSheet.create({
     container: {
-        maxWidth: 480,
-        padding: 10,
+        padding: 25,
         alignItems: "center",
-        backgroundColor: "#DFF2EB",
+        backgroundColor: "#F5EDED",
         alignContent: "space-between",
-        display: "flex"
-
-      
+        justifyContent: "center",
     },
     title: {
-        fontSize: 16,
+        fontSize: 26,
         fontWeight: "bold"
     },
     form: {
         borderWidth: 0.5,
-        borderColor: "#7AB2D3",
-        margin: 10
+        borderColor: "#7FA1C3",
+        margin: 10,
+        fontSize: 16,
+
 
     },
     button: {
-        padding: 4,
+        padding: 5,
         margin: 10,
         textAlign: 'center',
-        backgroundColor: "#B9E5E8"
+        backgroundColor: "#6482AD",
+        fontSize: 26,
+        borderRadius: 5,
+
+
     }
 }) 

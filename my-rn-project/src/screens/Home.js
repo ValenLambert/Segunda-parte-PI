@@ -12,7 +12,7 @@ export default class Home extends Component {
   render() {
     return (
       <View style= {styles.container}>
-        <Text >Home</Text>
+        <Text>Bienvenido/a: {auth.currentUser.username}</Text>
         <TouchableOpacity onPress={()=> this.logout()}>Log out</TouchableOpacity>
       </View>
     )
@@ -21,8 +21,11 @@ export default class Home extends Component {
 
 const styles = StyleSheet.create({
   container: {
-      alignItems: "center",
-      backgroundColor: "#DFF2EB",
-      flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "#F5EDED",
+    flex: 1,
+    padding: 25,
+    alignContent: "space-between"
       
   }})
