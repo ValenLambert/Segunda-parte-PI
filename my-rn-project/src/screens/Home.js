@@ -5,15 +5,19 @@ import { auth } from '../firebase/config'
 
 export default class Home extends Component {
 
-  logout(){
+  logout() {
     auth.signOut()
+    this.props.navigation.navigate("Login")
   }
-  
+
   render() {
     return (
-      <View style= {styles.container}>
-        <Text>Bienvenido/a: {auth.currentUser.username}</Text>
-        <TouchableOpacity onPress={()=> this.logout()}>Log out</TouchableOpacity>
+      <View style={styles.container}>
+        <Text style={styles.title}>Bienvenido/a: </Text>
+        <Text>{auth.currentUser.email}</Text>
+        <TouchableOpacity onPress={() => this.logout()}>
+          <Text style={styles.logout}>Log out</Text>
+        </TouchableOpacity>
       </View>
     )
   }
@@ -27,5 +31,16 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 25,
     alignContent: "space-between"
-      
-  }})
+  },
+  title: {
+    fontSize: 26,
+    fontWeight: "bold"
+  },
+  logout: {
+    backgroundColor: "#FF6F6F",
+    margin: 5,
+    borderRadius: 5,
+    fontSize: 16,
+    padding: 5
+  }
+})

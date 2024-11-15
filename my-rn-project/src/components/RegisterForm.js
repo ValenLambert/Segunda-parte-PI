@@ -53,7 +53,6 @@ export default class RegisterForm extends Component {
                         })
                             .then(
                                 () => this.props.navigation.navigate("Login")
-
                             )
                     }
                     console.log("usuario cresdoo", user)
