@@ -85,5 +85,8 @@ const styles = StyleSheet.create({
         borderRadius: 5,
 
 
+    },
+    errorText: {
+        color: '#FF6F6F'
     }
 }) 

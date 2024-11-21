@@ -36,7 +36,7 @@ export default class Profile extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <Text style={styles.texto}>Profile</Text>
+        <Text style={styles.texto}>Mi perfil:</Text>
 
         <View style={styles.infoContainer}>
           {/* Nombre de usuario */}
@@ -85,6 +85,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     backgroundColor: "#F5EDED",
     flex: 1,
+    justifyContent: "center",
 
   },
   texto: {
@@ -115,7 +116,7 @@ const styles = StyleSheet.create({
     margin: 5,
     borderRadius: 18,
     fontSize: 24,
-    padding: 16,
+    padding: 9,
   },
   
   infoContainer: {

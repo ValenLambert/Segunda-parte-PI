@@ -14,35 +14,36 @@ export default class RegisterForm extends Component {
             username: "",
             error1: 0,
             error2: 0,
-            error3: 0
+            error3: 0,
+            error4: "",
         }
     }
-    
+
 
     enviarLog = () => {
         const { email, password, username } = this.state;
-        if (password.length <= 6) {
+        if (!password) {
             this.setState({ error1: 1 })
         } else {
             console.log("Contraseña:", password)
             this.setState({ error1: 0 })
 
         }
-        if (email.includes("@")) {
+        if (!email) {
+            this.setState({ error2: 1 })
+        } else {
             console.log("Mail:", email)
             this.setState({ error2: 0 })
-        } else {
-            this.setState({ error2: 1 })
         }
 
-        if (username.length <= 4) {
+        if (!username) {
             this.setState({ error3: 1 })
         } else {
             console.log("User:", username)
             this.setState({ error3: 0 })
         }
 
-        if (username.length >= 4 && email.includes("@") && password.length >= 6) {
+        if (username && email && password) {
             auth.createUserWithEmailAndPassword(email, password)
                 .then((user) => {
                     if (user) {
@@ -57,7 +58,10 @@ export default class RegisterForm extends Component {
                     }
                     console.log("usuario cresdoo", user)
                 })
-                .catch(err => console.log("error firebae", err))
+                .catch((err) => {
+                    console.log("error firebase", err);
+                    this.setState({ error4: String(err.message) });
+                });
         } else {
             console.log("error firebae")
         }
@@ -92,26 +96,29 @@ export default class RegisterForm extends Component {
                     value={this.state.password}
                 />
 
-               
+
                 <TouchableOpacity onPress={() => this.enviarLog()} style={styles.button}>
                     <Text>Registrate</Text>
                 </TouchableOpacity>
 
-                {this.state.error1 === 1 && (
-                    <Text style={styles.errorText}>
-                        La contraseña debe ser mas larga
-                    </Text>
-                )}
+
                 {this.state.error2 === 1 && (
                     <Text style={styles.errorText}>
-                        El mail debe ser en el formato correcto
+                        Ingrese un email
                     </Text>
                 )}
                 {this.state.error3 === 1 && (
                     <Text style={styles.errorText}>
-                        El user name debe ser mas largo
+                        Ingrese un user name
                     </Text>
                 )}
+                {this.state.error1 === 1 && (
+                    <Text style={styles.errorText}>
+                        Ingrese una contraseña
+                    </Text>
+                )}
+
+                {this.state.error4 && <Text style={styles.errorText}>{this.state.error4}</Text>}
 
             </View>
         )
@@ -147,5 +154,8 @@ const styles = StyleSheet.create({
         fontSize: 26,
         borderRadius: 5
 
+    },
+    errorText: {
+        color: '#FF6F6F'
     }
 }) 
