@@ -118,7 +118,11 @@ export default class RegisterForm extends Component {
                     </Text>
                 )}
 
-                {this.state.error4 && <Text style={styles.errorText}>{this.state.error4}</Text>}
+                {this.state.error4 =! null &&
+                    (<Text style={styles.errorText}>
+                        {this.state.error4}
+                    </Text>
+                )}
 
             </View>
         )
@@ -156,6 +160,8 @@ const styles = StyleSheet.create({
 
     },
     errorText: {
-        color: '#FF6F6F'
+        color: '#FF6F6F',
+        textAlign: 'center',
+
     }
 }) 
