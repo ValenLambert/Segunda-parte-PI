@@ -7,20 +7,22 @@ export default class NuevoPost extends Component {
     constructor(props){
       super(props)
       this.state=({
-        posts: '',
+        posts: [],
         email: '',
         textoDescriptivo:'',
         error: '',
-        likes: ''
+        likes: '',
+        createdAt:''
       })
     }
 
-    submit(posts, textoDescriptivo){
+    submit(posts, textoDescriptivo, likes){
       db.collection('posts').add({
         owner: auth.currentUser.email,
         textoDescriptivo: textoDescriptivo,
-        createdAt: Date.now(),
-        posts: posts
+        createdAt: now.Date(),
+        posts: posts,
+        likes: likes
       })
       .then(()=> this.props.navigation.navigate('Home'))
       .catch(e => (console.log(e)))
