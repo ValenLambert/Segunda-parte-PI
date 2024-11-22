@@ -85,16 +85,16 @@ const styles = StyleSheet.create({
     alignItems: "center",
     backgroundColor: "#F5EDED",
     flex: 1,
-    justifyContent: "center",
+    // justifyContent: "center",
 
   },
   texto: {
     borderColor: "#7FA1C3",
     backgroundColor: "#E2DAD6",
-    margin: 36,
+    margin: 40,
     borderRadius: 5,
-    fontSize: 18,
-    padding: 5,
+    fontSize: 22,
+    padding: 8,
     color: "#000"
   },
   texto2: {
@@ -114,7 +114,7 @@ const styles = StyleSheet.create({
   logout: {
     backgroundColor: "#FF6F6F",
     margin: 5,
-    borderRadius: 18,
+    borderRadius: 14,
     fontSize: 24,
     padding: 9,
   },
