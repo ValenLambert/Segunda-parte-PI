@@ -80,21 +80,21 @@ export default class Profile extends Component {
           {/* Posts */}
           <View style={styles.row}>
             <Text style={styles.texto2}>Posts:  </Text>
-            <View style={styles.Flatlist}> 
-            <FlatList
-              data={this.state.userPosts}
-              keyExtractor={(item) => item.id.toString()}
-              renderItem={({ item }) =>
-              <View style={styles.postContainer}>
-              <Text style={styles.postTitle}> {item.data.posts || "Sin título"} </Text>
-              <Text style={styles.postContent}> {item.data.textoDescriptivo || "Sin contenido"} </Text>
-              <Text style={styles.postDate}> Publicado el: {item.data.createdAt || "Desconocido"} </Text>
-              <TouchableOpacity style={styles.borrar}> 
-              <Text style={styles.borrar}> Borrar Post </Text>
-              </TouchableOpacity>
-            </View> 
-            }
-            />
+            <View style={styles.Flatlist}>
+              <FlatList
+                data={this.state.userPosts}
+                keyExtractor={(item) => item.id.toString()}
+                renderItem={({ item }) =>
+                  <View style={styles.postContainer}>
+                    <Text style={styles.postTitle}> {item.data.posts || "Sin título"} </Text>
+                    <Text style={styles.postContent}> {item.data.textoDescriptivo || "Sin contenido"} </Text>
+                    <Text style={styles.postDate}> Publicado el: {item.data.createdAt || "Desconocido"} </Text>
+                    <TouchableOpacity style={styles.borrar}>
+                      <Text style={styles.borrar}> Borrar Post </Text>
+                    </TouchableOpacity>
+                  </View>
+                }
+              />
             </View>
           </View>
         </View>
@@ -102,7 +102,7 @@ export default class Profile extends Component {
         <View> <TouchableOpacity style={styles.logout} onPress={() => this.logout()}>
           <Text style={styles.text1}>Log out</Text>
         </TouchableOpacity> </View>
-        
+
       </View>
     )
   }
@@ -117,7 +117,7 @@ const styles = StyleSheet.create({
     // justifyContent: "center",
   },
   postContainer: {
-    backgroundColor: "#FFF",
+    backgroundColor: "#E2DAD6",
     padding: 8,
     marginVertical: 10,
     borderRadius: 8,
@@ -182,11 +182,12 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   postDate: {
-    fontSize: 14,
+    fontSize: 12,
     color: "#888",
-    textAlign: "left",
+    fontStyle: "italic",
+    textAlign: "right",
   },
-  Flatlist:{
+  Flatlist: {
     flexDirection: "column",
     alignItems: "right",
     marginBottom: 10,
@@ -194,6 +195,6 @@ const styles = StyleSheet.create({
     width: '100%',
     flex: 1,
     maxHeight: 300, // Limita la altura de los posts
-  overflow: "hidden", 
+    overflow: "hidden",
   }
 })
