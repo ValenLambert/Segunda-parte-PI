@@ -3,13 +3,15 @@ import React, { Component } from 'react';
 import { TouchableOpacity } from 'react-native';
 import { db, auth } from '../firebase/config';
 import firebase from 'firebase';
+import AntDesign from '@expo/vector-icons/AntDesign';
 
 export default class Profile extends Component {
   constructor(props) {
     super(props);
     this.state = {
       userInfo: [],
-      userPosts: []
+      userPosts: [],
+      like: false
     };
   }
 
@@ -46,6 +48,31 @@ export default class Profile extends Component {
         });
       });
   }
+  // metodo para dar like al posts
+  like(postId) {
+    db.collection('post')
+      .doc(postId)
+      .update({
+        likes: firebase.firestore.FieldValue.arrayUnion(firebase.auth().currentUser.email)
+      })
+      .then(() => {
+        this.setState({ like: true })
+      })
+      .catch((error) => console.log("Error al dar like: ", error));
+  }
+
+  // metodo para sacar like
+  dislike(postId) {
+    db.collection('posts')
+      .doc(postId)
+      .update({
+        likes: firebase.firestore.FieldValue.arrayRemove(firebase.auth().currentUser.email)
+      })
+      .then(() => {
+        this.setState({ like: false })
+      })
+      .catch((error) => console.log(error))
+  }
 
   // Método para borrar un post
   borrarPost(id) {
@@ -66,10 +93,40 @@ export default class Profile extends Component {
     this.props.navigation.navigate('Login');
   }
 
+  actualizarLike() {
+    db.collection('posts')
+      .doc(idDocumento)
+      .update({
+        likes: firebase.firestore.FieldValue.increment(1),
+        arrlikeados: firebase.firestore.FieldValue.arrayUnion(auth.currentUser.email) // Agrega el email del usuario al array `arrlikeados`
+      })
+      .then(() => {
+        this.setState({
+          likeado: true
+        });
+      })
+      .catch((error) => console.log(error))
+  }
+  // Método para remover al usuario del array "arrlikeados" y cambiar `likeado` a false
+
+  sacarLike() {
+    db.collection('posts')
+      .doc(idDocumento)
+      .update({
+        arrlikeados: firebase.firestore.FieldValue.arrayRemove(auth.currentUser.email) // remueve el email del usuario al array `arrlikeados`
+      })
+      .then(() => {
+        this.setState({
+          likes: -1
+        });
+      })
+      .catch((error) => console.error(error))
+  }
+
   render() {
     return (
       <View style={styles.containerP}>
-        <Text style={styles.texto}>Mi perfil:</Text>
+        <Text style={styles.texto}>Mi perfil: </Text>
 
         <View style={styles.infoContainer}>
           {/* Información del usuario */}
@@ -116,11 +173,21 @@ export default class Profile extends Component {
                         <Text style={styles.postDate}>
                           Publicado el: {item.data.createdAt || 'Desconocido'}
                         </Text>
+                        {this.state.like ?
+                          (<TouchableOpacity styles={styles.btn} onPress={() => this.sacarLike(item.id)} >
+                            <AntDesign name="dislike2" style={styles.likeIcon} color="black" />                          </TouchableOpacity>)
+                          : (
+                            <TouchableOpacity onPress={() => this.like(item.id)} >
+                            <AntDesign name="like2" style={styles.likeIcon} color="black" />
+                            </TouchableOpacity>
+                          )
+                        }
+
                         <TouchableOpacity
                           style={styles.borrar}
                           onPress={() => this.borrarPost(item.id)}
                         >
-                          <Text style={styles.borrarTexto}>Borrar Post</Text>
+                          <AntDesign name="delete" size={18} color="black" />
                         </TouchableOpacity>
                       </View>
                     )}
@@ -132,7 +199,7 @@ export default class Profile extends Component {
             )}
           </View>
         </View>
-              <br></br><br></br>
+        <br></br><br></br>
 
         {/* Botón de logout */}
         <View>
@@ -159,7 +226,10 @@ const styles = StyleSheet.create({
     padding: 8,
     marginVertical: 10,
     borderRadius: 8,
-    shadowColor: '#000'
+    shadowColor: '#000',
+    borderRadius: 5,
+    borderColor: '#6482AD',
+    borderWidth: 2,
   },
   texto: {
     borderColor: '#7FA1C3',
@@ -192,12 +262,13 @@ const styles = StyleSheet.create({
     marginTop: 12
   },
   borrar: {
-    backgroundColor: '#FF6F6F',
+    backgroundColor: '#888',
     borderRadius: 12,
     paddingVertical: 6,
     paddingHorizontal: 14,
     alignSelf: 'center',
-    marginTop: 12
+    marginTop: 12,
+    borderColor: '#FF6F6F'
   },
   borrarTexto: {
     fontSize: 12,
@@ -205,7 +276,8 @@ const styles = StyleSheet.create({
   },
   infoContainer: {
     width: '100%',
-    paddingHorizontal: 20
+    paddingHorizontal: 20,
+
   },
   postTitle: {
     fontSize: 18,
@@ -230,6 +302,12 @@ const styles = StyleSheet.create({
     width: '100%',
     padding: 8,
     margin: 8,
-    elevation: 2
-  }
+    elevation: 2,
+
+
+  },
+likeIcon: {
+        fontSize: 16,
+        padding: 5,
+    }
 });

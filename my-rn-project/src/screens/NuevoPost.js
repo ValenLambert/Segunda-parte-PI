@@ -27,7 +27,7 @@ export default class NuevoPost extends Component {
         textoDescriptivo: textoDescriptivo,
         createdAt: Date.now(),
         posts: posts,
-        likes:0,
+        likes: 0,
       })
       .then(() => this.props.navigation.navigate("Home"))
       .catch((e) => console.log(e));
