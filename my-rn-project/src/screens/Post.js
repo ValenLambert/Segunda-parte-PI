@@ -2,27 +2,51 @@ import React, { Component } from 'react'
 import { View, Text } from 'react-native';
 import { StyleSheet } from 'react-native';
 import AntDesign from '@expo/vector-icons/AntDesign';
-import { TouchableOpacity } from 'react-native'
-
+import { TouchableOpacity } from 'react-native';
+import { db } from '../firebase/config';
+import firebase from 'firebase';
+import { auth } from '../firebase/config';
 
 export class Post extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            likeado: false
+            likeado: false,
         }
     }
-    actualizarLike() {
-        this.setState({
-            likeado: true
-        })
+    componentDidMount() {
+        const { likedBy } = this.props.info.data;
+
+        if (likedBy && likedBy.includes(auth.currentUser.email)) {
+            this.setState({ likeado: true });
+        }
+    }
+
+    actualizarLike(idDocumento) {
+        db.collection("posts").doc(idDocumento)
+            .update({
+                likes:firebase.firestore.FieldValue.increment(1),
+                likedBy: firebase.firestore.FieldValue.arrayUnion(auth.currentUser.email)
+            })
+            .then (()=> {
+                this.setState ({
+                    likeado : true
+                })
+            })
 
     }
 
-    sacarLike(){
-      this.setState ({
+    sacarLike(idDocumento){
+        db.collection("posts").doc(idDocumento)
+        .update({
+            likes:   firebase.firestore.FieldValue.increment(-1),
+            likedBy:  firebase.firestore.FieldValue.arrayRemove(auth.currentUser.email)
+            })
+        .then (()=> {
+            this.setState ({
                 likeado : false
             })
+        })
  
     }
 
@@ -37,10 +61,10 @@ export class Post extends Component {
                 <Text> Likes: {this.props.info.data.likes}</Text>
                 {
                     this.state.likeado ?
-                        <TouchableOpacity style={styles.btn} onPress={() => this.sacarLike()}>
+                        <TouchableOpacity style={styles.btn} onPress={() => this.sacarLike(this.props.info.id)}>
                             <AntDesign name="like1" size={24} color="black" />
                         </TouchableOpacity> :
-                        <TouchableOpacity style={styles.btn} onPress={() => this.actualizarLike()}>
+                        <TouchableOpacity style={styles.btn} onPress={() => this.actualizarLike(this.props.info.id)}>
                             <AntDesign name="like2" size={24} color="black" />
                         </TouchableOpacity>
 

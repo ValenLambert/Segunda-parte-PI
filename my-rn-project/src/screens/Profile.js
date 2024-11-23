@@ -11,11 +11,12 @@ export default class Profile extends Component {
     this.state = {
       userInfo: [],
       userPosts: [],
-      like: false
+      likes: false
     };
   }
 
   componentDidMount() {
+
     // Cargar información del usuario
     db.collection('users')
       .where('owner', '==', auth.currentUser.email)
@@ -37,42 +38,24 @@ export default class Profile extends Component {
       .where('owner', '==', auth.currentUser.email)
       .onSnapshot((docs) => {
         let arrPosts = [];
+        let likes = {};  
         docs.forEach((doc) => {
           arrPosts.push({
             id: doc.id,
-            data: doc.data()
+            data: doc.data(),
           });
+          const { likedBy } = doc.data();
+          likes = likedBy && likedBy.includes(auth.currentUser.email);
         });
+
         this.setState({
-          userPosts: arrPosts
+          userPosts: arrPosts,
+          likes: likes,
         });
       });
   }
-  // metodo para dar like al posts
-  like(postId) {
-    db.collection('post')
-      .doc(postId)
-      .update({
-        likes: firebase.firestore.FieldValue.arrayUnion(firebase.auth().currentUser.email)
-      })
-      .then(() => {
-        this.setState({ like: true })
-      })
-      .catch((error) => console.log("Error al dar like: ", error));
-  }
 
-  // metodo para sacar like
-  dislike(postId) {
-    db.collection('posts')
-      .doc(postId)
-      .update({
-        likes: firebase.firestore.FieldValue.arrayRemove(firebase.auth().currentUser.email)
-      })
-      .then(() => {
-        this.setState({ like: false })
-      })
-      .catch((error) => console.log(error))
-  }
+
 
   // Método para borrar un post
   borrarPost(id) {
@@ -93,35 +76,38 @@ export default class Profile extends Component {
     this.props.navigation.navigate('Login');
   }
 
-  actualizarLike() {
-    db.collection('posts')
-      .doc(idDocumento)
-      .update({
-        likes: firebase.firestore.FieldValue.increment(1),
-        arrlikeados: firebase.firestore.FieldValue.arrayUnion(auth.currentUser.email) // Agrega el email del usuario al array `arrlikeados`
-      })
-      .then(() => {
-        this.setState({
-          likeado: true
-        });
-      })
-      .catch((error) => console.log(error))
-  }
-  // Método para remover al usuario del array "arrlikeados" y cambiar `likeado` a false
+  Like(idDocumento) {
+    console.log(idDocumento)
+    db.collection("posts").doc(idDocumento)
+        .update({
+            likes:firebase.firestore.FieldValue.increment(1),
+            likedBy: firebase.firestore.FieldValue.arrayUnion(auth.currentUser.email)
+        })
+        .then (()=> {
+            this.setState ({
+                like : true
+            })
+        })
 
-  sacarLike() {
-    db.collection('posts')
-      .doc(idDocumento)
-      .update({
-        arrlikeados: firebase.firestore.FieldValue.arrayRemove(auth.currentUser.email) // remueve el email del usuario al array `arrlikeados`
-      })
-      .then(() => {
-        this.setState({
-          likes: -1
-        });
-      })
-      .catch((error) => console.error(error))
-  }
+}
+
+sacarLike(idDocumento){
+  console.log("MIRARARAR VALI",this.state.likes)
+
+    db.collection("posts").doc(idDocumento)
+    .update({
+        likes:   firebase.firestore.FieldValue.increment(-1),
+        likedBy:  firebase.firestore.FieldValue.arrayRemove(auth.currentUser.email)
+        })
+    .then (()=> {
+        this.setState ({
+            like : false
+        })
+    })
+
+}
+
+
 
   render() {
     return (
@@ -174,16 +160,17 @@ export default class Profile extends Component {
                         <Text style={styles.postDate}>
                           Publicado el: {item.data.createdAt || 'Desconocido'}
                         </Text>
-                        {this.state.like ?
+                        <Text> Likes: {item.data.likes}</Text>
+                        {this.state.likes ?
                           (<TouchableOpacity styles={styles.btn} onPress={() => this.sacarLike(item.id)} >
-                            <AntDesign name="dislike2" style={styles.likeIcon} color="black" />                          </TouchableOpacity>)
+                               <AntDesign name="like1" size={24} color="black"/>                       
+                               </TouchableOpacity>)
                           : (
-                            <TouchableOpacity onPress={() => this.like(item.id)} >
-                            <AntDesign name="like2" style={styles.likeIcon} color="black" />
+                            <TouchableOpacity onPress={() => this.Like(item.id)} >
+                            <AntDesign name="like2" size={24} color="black" />
                             </TouchableOpacity>
                           )
                         }
-
                         <TouchableOpacity
                           style={styles.borrar}
                           onPress={() => this.borrarPost(item.id)}
