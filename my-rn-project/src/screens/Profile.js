@@ -138,7 +138,7 @@ export default class Profile extends Component {
                 : 'Cargando...'}
             </Text>
           </View>
-
+                <br></br>
           <View style={styles.row}>
             <Text style={styles.texto2}>Email del usuario:</Text>
             <Text style={styles.text1}>
@@ -147,12 +147,13 @@ export default class Profile extends Component {
                 : 'Cargando...'}
             </Text>
           </View>
+          <br></br>
 
           <View style={styles.row}>
             <Text style={styles.texto2}>Cantidad de posts:</Text>
             <Text style={styles.text1}>{this.state.userPosts.length}</Text>
           </View>
-
+          <br></br>
           {/* Posts del usuario */}
           <View>
             {this.state.userPosts.length > 0 ? (

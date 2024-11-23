@@ -82,7 +82,7 @@ export default class Busqueda extends Component {
 
         {/* para q muestre el mensqje de que no hay usuairo encontrado */}
         {this.state.sinResultado ? (
-          <Text style={styles.mensaje}>El username no existe</Text>
+          <Text style={styles.mensaje}> El username no existe</Text>
         ) : (
           /* q muestre a lso ususaiors encontrados  */
           <FlatList
@@ -103,7 +103,7 @@ export default class Busqueda extends Component {
 const styles = StyleSheet.create({
   containerB: {
     alignItems: 'center',
-    justifyContent: 'center',
+    // justifyContent: 'center',
     backgroundColor: '#F5EDED',
     flex: 1,
     padding: 25,
@@ -135,11 +135,14 @@ const styles = StyleSheet.create({
   },
   userName: {
     fontSize: 18,
-    fontWeight: 'bold',
+    fontStyle: 'italic'
   },
   mensaje: {
     fontSize: 18,
     color: 'red',
-    marginTop: 10,
+    // marginTop: 10,
   },
+  FlatList: {
+    alignContent: "row"
+  }
 });
