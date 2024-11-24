@@ -14,40 +14,33 @@ export class Post extends Component {
             likeado: false,
         }
     }
-    componentDidMount() {
-        const { likedBy } = this.props.info.data;
-
-        if (likedBy && likedBy.includes(auth.currentUser.email)) {
-            this.setState({ likeado: true });
-        }
-    }
 
     actualizarLike(idDocumento) {
         db.collection("posts").doc(idDocumento)
             .update({
-                likes:firebase.firestore.FieldValue.increment(1),
+                likes: firebase.firestore.FieldValue.increment(1),
                 likedBy: firebase.firestore.FieldValue.arrayUnion(auth.currentUser.email)
             })
-            .then (()=> {
-                this.setState ({
-                    likeado : true
+            .then(() => {
+                this.setState({
+                    likeado: true
                 })
             })
 
     }
 
-    sacarLike(idDocumento){
+    sacarLike(idDocumento) {
         db.collection("posts").doc(idDocumento)
-        .update({
-            likes:   firebase.firestore.FieldValue.increment(-1),
-            likedBy:  firebase.firestore.FieldValue.arrayRemove(auth.currentUser.email)
+            .update({
+                likes: firebase.firestore.FieldValue.increment(-1),
+                likedBy: firebase.firestore.FieldValue.arrayRemove(auth.currentUser.email)
             })
-        .then (()=> {
-            this.setState ({
-                likeado : false
+            .then(() => {
+                this.setState({
+                    likeado: false
+                })
             })
-        })
- 
+
     }
 
 
@@ -58,17 +51,17 @@ export class Post extends Component {
                 <Text style={styles.description}>{this.props.info.data.textoDescriptivo}</Text>
                 <Text style={styles.owner}>Creado por: {this.props.info.data.owner}</Text>
                 <View style={styles.likes}>
-                <Text> Likes: {this.props.info.data.likes}</Text>
-                {
-                    this.state.likeado ?
-                        <TouchableOpacity style={styles.btn} onPress={() => this.sacarLike(this.props.info.id)}>
-                            <AntDesign name="like1" size={24} color="black" />
-                        </TouchableOpacity> :
-                        <TouchableOpacity style={styles.btn} onPress={() => this.actualizarLike(this.props.info.id)}>
-                            <AntDesign name="like2" size={24} color="black" />
-                        </TouchableOpacity>
+                    <Text> Likes: {this.props.info.data.likes}</Text>
+                    {
+                        this.props.info.data.likedBy && this.props.info.data.likedBy.includes(auth.currentUser.email) ?
+                            <TouchableOpacity style={styles.btn} onPress={() => this.sacarLike(this.props.info.id)}>
+                                <AntDesign name="like1" size={24} color="black" />
+                            </TouchableOpacity> :
+                            <TouchableOpacity style={styles.btn} onPress={() => this.actualizarLike(this.props.info.id)}>
+                                <AntDesign name="like2" size={24} color="black" />
+                            </TouchableOpacity>
 
-                }
+                    }
                 </View>
             </View>
         )
@@ -103,10 +96,10 @@ const styles = StyleSheet.create({
         fontStyle: "italic",
         textAlign: "right",
     },
-    likes:{
+    likes: {
         flexDirection: "row",
         alignItems: "center",
-        justifyContent: "space-between", 
+        justifyContent: "space-between",
         marginTop: 15,
     }
 })

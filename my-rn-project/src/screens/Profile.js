@@ -3,6 +3,7 @@ import { Text, View, StyleSheet, FlatList, TouchableOpacity } from 'react-native
 import { db, auth } from '../firebase/config';
 import firebase from 'firebase';
 import AntDesign from '@expo/vector-icons/AntDesign';
+import PostProfile from './PostProfile';
 
 export default class Profile extends Component {
   constructor(props) {
@@ -42,32 +43,7 @@ export default class Profile extends Component {
       });
   }
 
-  // borrar un pposteo 
-  borrarPost(id) {
-    db.collection('posts')
-      .doc(id)
-      .delete()
-      .then(() => console.log('Post eliminado correctamente'))
-      .catch((error) => console.error('Error al eliminar el post:', error));
-  }
-
-  // Método para manejar likes y dilkes 
-  Like(postId, likedBy) {
-    const userEmail = auth.currentUser.email;
-    if (likedBy.includes(userEmail)) {
-      db.collection('posts').doc(postId).update({
-        likes: firebase.firestore.FieldValue.increment(-1),
-        likedBy: firebase.firestore.FieldValue.arrayRemove(userEmail),
-      });
-    } else {
-      db.collection('posts').doc(postId).update({
-        likes: firebase.firestore.FieldValue.increment(1),
-        likedBy: firebase.firestore.FieldValue.arrayUnion(userEmail),
-      });
-    }
-  }
-
-// desloguearse 
+  // desloguearse 
   logout() {
     auth.signOut();
     this.props.navigation.navigate('Login');
@@ -97,45 +73,9 @@ export default class Profile extends Component {
 
         {/* un flatlist para q se vean todos los posetos */}
         <FlatList
-          data={userPosts}
-          keyExtractor={(item) => item.id}
-          renderItem={({ item }) => {
-            // esto lo hice para q no se rompa si no hay likes, peor dsp capaz lo no hace falta
-            const likedBy = item.data.likedBy || []; 
-            const userLiked = likedBy.includes(auth.currentUser.email);
-            return (
-              <View style={styles.postContainer}>
-                <Text style={styles.postTitle}> {item.data.posts || 'Sin título'}</Text>
-                <Text style={styles.postContent}>
-                  {item.data.textoDescriptivo || 'Sin contenido'}
-                </Text>
-                <Text style={styles.postDate}>
-                  Publicado el: {item.data.createdAt || 'Desconocido'}
-                </Text>
-                <Text>Likes: {item.data.likes || 0}</Text>
-
-                {/* Botón de like */}
-                <TouchableOpacity
-                  style={styles.likeIcon}
-                  onPress={() => this.Like(item.id, likedBy)}
-                >
-                  <AntDesign
-                    name={userLiked ? 'like1' : 'like2'}
-                    size={28}
-                    color={userLiked ? '#EE99C2' : 'gray'}
-                  />
-                </TouchableOpacity>
-
-                {/* Botón de borrar */}
-                <TouchableOpacity
-                  style={styles.borrar}
-                  onPress={() => this.borrarPost(item.id)}
-                >
-                  <AntDesign name="delete" size={18} color="black" />
-                </TouchableOpacity>
-              </View>
-            );
-          }}
+          data={this.state.userPosts}
+          keyExtractor={(item) => item.id.toString()}
+          renderItem={({ item }) => <PostProfile info={item} />}
         />
 
         {/* Botón de logout */}
