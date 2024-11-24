@@ -7,15 +7,13 @@ export default class NuevoPost extends Component {
   constructor(props) {
     super(props)
     this.state = ({
-      posts: [],
-      email: '',
+      posts: '',
       textoDescriptivo: '',
       error: '',
-      createdAt: ''
     })
   }
 
-  submit(posts, textoDescriptivo, likes) {
+  submit(posts, textoDescriptivo) {
     if (!posts || !textoDescriptivo) {
       this.setState({ error: "Todos los campos son obligatorios" });
       return;
@@ -28,10 +26,15 @@ export default class NuevoPost extends Component {
         createdAt: Date.now(),
         posts: posts,
         likes: 0,
+        likedBy: []
       })
-      .then(() => this.props.navigation.navigate("Home"))
-      .catch((e) => console.log(e));
+      .then(() => {
+        this.setState({ posts: '', textoDescriptivo: '', error: '' });
+        this.props.navigation.navigate('Home');
+      })
+      .catch((e) => console.error('Error al crear post:', e));
   }
+
 
 
   render() {
@@ -45,7 +48,7 @@ export default class NuevoPost extends Component {
           onChangeText={text => this.setState({ posts: text, error: '' })}
           value={this.state.posts}
         />
-        <br></br>
+
         <TextInput
           style={styles.input}
           keyboardType='default'
@@ -53,9 +56,11 @@ export default class NuevoPost extends Component {
           onChangeText={text => this.setState({ textoDescriptivo: text, error: '' })}
           value={this.state.textoDescriptivo}
         />
+
         {this.state.error ? (
-          <Text style={{ color: "red" }}>{this.state.error}</Text>
+          <Text style={{ color: "red" }}> {this.state.error} </Text>
         ) : null}
+        
         <TouchableOpacity onPress={() => this.submit(this.state.posts, this.state.textoDescriptivo)}>
           <Text style={styles.crear} > Crear post </Text>
         </TouchableOpacity>
