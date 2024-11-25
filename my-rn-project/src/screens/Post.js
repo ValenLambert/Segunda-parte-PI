@@ -55,7 +55,7 @@ export class Post extends Component {
                     {
                         this.props.info.data.likedBy && this.props.info.data.likedBy.includes(auth.currentUser.email) ?
                             <TouchableOpacity style={styles.btn} onPress={() => this.sacarLike(this.props.info.id)}>
-                                <AntDesign name="like1" size={24} color="black" />
+                                <AntDesign name="like1" size={24} color="#EE99C2" />
                             </TouchableOpacity> :
                             <TouchableOpacity style={styles.btn} onPress={() => this.actualizarLike(this.props.info.id)}>
                                 <AntDesign name="like2" size={24} color="black" />

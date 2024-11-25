@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import { Text, View, StyleSheet, FlatList, TouchableOpacity } from 'react-native';
+import { Text, View, StyleSheet, FlatList, TouchableOpacity,  ActivityIndicator } from 'react-native';
 import { db, auth } from '../firebase/config';
 import firebase from 'firebase';
 import AntDesign from '@expo/vector-icons/AntDesign';
-import PostProfile from './PostProfile';
+import PostProfile from '../components/PostProfile';
 
 export default class Profile extends Component {
   constructor(props) {
@@ -60,18 +60,19 @@ export default class Profile extends Component {
           {/* Información del usuario */}
           <Text style={styles.texto2}>Nombre de usuario: </Text>
           <Text style={styles.text1}>
-            {userInfo.length > 0 ? userInfo[0].data.username : 'Cargando...'}
+            {userInfo.length > 0 ? userInfo[0].data.username : <ActivityIndicator/>}
           </Text>
 
           <Text style={styles.texto2}>Email del usuario: </Text>
           <Text style={styles.text1}>
-            {userInfo.length > 0 ? userInfo[0].data.owner : 'Cargando...'}
+            {userInfo.length > 0 ? userInfo[0].data.owner :  <ActivityIndicator/>}
           </Text>
 
           <Text style={styles.texto2}>Cantidad de posts: {userPosts.length}</Text>
         </View>
 
         {/* un flatlist para q se vean todos los posetos */}
+        <Text style={styles.texto2}>Posts: </Text>
         <FlatList
           data={this.state.userPosts}
           keyExtractor={(item) => item.id.toString()}

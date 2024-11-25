@@ -38,12 +38,12 @@ export default class Home extends Component {
         <Text style={styles.title}>Bienvenido/a: </Text>
         <Text>{auth.currentUser.email}</Text>
         {
-          this.state.posts.lenght === 0
+          this.state.posts.length === 0
             ?
             <ActivityIndicator />
             :
             <View style={styles.flatlist}>
-              <Text style={styles.titulo}>Comentarios recientes:</Text>
+              <Text style={styles.titulo}>Posteos mas recientes:</Text>
               <FlatList
                 data={this.state.posts}
                 keyExtractor={(item) => item.id.toString()}

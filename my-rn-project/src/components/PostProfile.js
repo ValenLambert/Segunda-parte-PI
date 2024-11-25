@@ -58,13 +58,12 @@ export class PostProfile extends Component {
             <View style={styles.postContainer} >
                 <Text style={styles.postTitle}>{this.props.info.data.posts}:</Text>
                 <Text style={styles.postContent}>{this.props.info.data.textoDescriptivo}</Text>
-                <Text style={styles.postDate}>Publicado el: {this.props.info.data.createdAt}</Text>
                 <View style={styles.likes}>
                     <Text> Likes: {this.props.info.data.likes}</Text>
                     {
                         this.props.info.data.likedBy && this.props.info.data.likedBy.includes(auth.currentUser.email) ? 
                         <TouchableOpacity style={styles.btn} onPress={() => this.sacarLike(this.props.info.id)}>
-                            <AntDesign name="like1" size={24} color="black" />
+                            <AntDesign name="like1" size={24} color="#EE99C2" />
                         </TouchableOpacity> :
                             <TouchableOpacity style={styles.btn} onPress={() => this.actualizarLike(this.props.info.id)}>
                                 <AntDesign name="like2" size={24} color="black" />

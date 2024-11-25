@@ -2,6 +2,7 @@ import { Text, View, TextInput, FlatList } from 'react-native';
 import React, { Component } from 'react';
 import { StyleSheet } from 'react-native';
 import { db } from '../firebase/config'; // Suponiendo que esta es tu configuración de Firebase
+import { ActivityIndicator } from 'react-native-web';
 
 export default class Busqueda extends Component {
   constructor(props) {
@@ -80,9 +81,12 @@ export default class Busqueda extends Component {
           value={this.state.busqueda}
         />
 
-        {/* para q muestre el mensqje de que no hay usuairo encontrado */}
-        {this.state.sinResultado ? (
-          <Text style={styles.mensaje}> El username no existe</Text>
+      {/* si el ususario no escribio nada, q se vea el loader, y una vez q escribio algo, ahi q se deje de ver */}
+        {this.state.busqueda.length ===0 ?  
+        (<ActivityIndicator/> )
+        :
+        this.state.sinResultado ? (
+          <Text style={styles.mensaje}> El username no existe  </Text>
         ) : (
           /* q muestre a lso ususaiors encontrados  */
           <FlatList
@@ -95,6 +99,7 @@ export default class Busqueda extends Component {
             )}
           />
         )}
+        
       </View>
     );
   }
